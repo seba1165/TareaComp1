@@ -6,16 +6,16 @@ function fit = svm_classifier(data,class,sigma,c)
 %groups = ismember(species,'M');
 
 %ionosphere
-species = cellstr(class);
-groups = ismember(species,'g');
+%species = cellstr(class);
+%groups = ismember(species,'g');
 
 %% Randomly select training and test sets.
 %indians, german, australian 
-%[train, test] = crossvalind('holdOut',class);
-%cp = classperf(class);
+[train, test] = crossvalind('holdOut',class);
+cp = classperf(class);
 %ionosphere, wisconsin 
-[train, test] = crossvalind('holdOut',groups);
-cp = classperf(groups);
+%[train, test] = crossvalind('holdOut',groups);
+%cp = classperf(groups);
 
 %% Use the svmtrain function to train an SVM classifier using a radial basis function and plot the grouped data.
 %svmStruct = svmtrain(data(train,:),groups(train),'showplot',true);
@@ -23,8 +23,8 @@ cp = classperf(groups);
 
 options = optimset('maxiter',10000,'largescale','off','TolX',5e-4,'TolFun',5e-4);
 
-%svmStruct = svmtrain(data(train,:),class(train),'showplot',false,'kernel_function','rbf','AUTOSCALE',true,'rbf_sigma',sigma,'BoxConstraint',c,'Method','QP','quadprog_opts',options);
-svmStruct = svmtrain(data(train,:),groups(train),'showplot',false,'kernel_function','rbf','AUTOSCALE',true,'rbf_sigma',sigma,'BoxConstraint',c,'Method','QP','quadprog_opts',options);
+svmStruct = svmtrain(data(train,:),class(train),'showplot',false,'kernel_function','rbf','AUTOSCALE',true,'rbf_sigma',sigma,'BoxConstraint',c,'Method','QP','quadprog_opts',options);
+%svmStruct = svmtrain(data(train,:),groups(train),'showplot',false,'kernel_function','rbf','AUTOSCALE',true,'rbf_sigma',sigma,'BoxConstraint',c,'Method','QP','quadprog_opts',options);
 %svmStruct = svmtrain(data(train,:),groups(train),'showplot',true,'kernel_function','polynomial');
 
 %Se clasifica el conjunto de test en base al modelo obtenido
